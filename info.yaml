@@ -9,7 +9,7 @@ project:
 
   # The process (PDK) to build for, matching your shuttle: sky130A, gf180mcuD, ihp-sg13cmos5l or ihp-sg13g2.
   # (Read by this template's workflows; not a Tiny Tapeout field.)
-  pdk:          "gf180mcuD"
+  pdk:          "ihp-sg13cmos5l"
 
   # How many tiles your design occupies? A single tile is about 167x108 uM (sky130A).
   # Valid values depend on the PDK: see tech/<pdk>/tile_sizes.yaml in TinyTapeout/tt-support-tools.
