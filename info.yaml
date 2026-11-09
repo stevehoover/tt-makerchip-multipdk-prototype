@@ -7,8 +7,13 @@ project:
   language:     "TL-Verilog" # other examples include Verilog, SystemVerilog, Amaranth, VHDL, etc
   clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
 
-  # How many tiles your design occupies? A single tile is about 167x108 uM.
-  tiles: "1x1"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
+  # The process (PDK) to build for, matching your shuttle: sky130A, gf180mcuD, ihp-sg13cmos5l or ihp-sg13g2.
+  # (Read by this template's workflows; not a Tiny Tapeout field.)
+  pdk:          "sky130A"
+
+  # How many tiles your design occupies? A single tile is about 167x108 uM (sky130A).
+  # Valid values depend on the PDK: see tech/<pdk>/tile_sizes.yaml in TinyTapeout/tt-support-tools.
+  tiles: "1x1"
 
   # Your top module name must start with "tt_um_". Make it unique by including your github username:
   top_module:  "tt_um_example"

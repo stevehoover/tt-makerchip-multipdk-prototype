@@ -59,6 +59,10 @@
   "FP_IO_VLENGTH": 2,
 
   "FP_PDN_VPITCH": 38.87,
+  "pdk::ihp-sg13*": {
+    "FP_PDN_VPITCH": 50.0,
+    "FP_PDN_VWIDTH": 2.1
+  },
 
   "//": "Clock",
   "RUN_CTS": 1,

@@ -20,11 +20,29 @@ else
 SIM_BUILD				= sim_build/gl
 COMPILE_ARGS    += -DGL_TEST
 COMPILE_ARGS    += -DFUNCTIONAL
-COMPILE_ARGS    += -DUSE_POWER_PINS
 COMPILE_ARGS    += -DSIM
+# Cell models for the PDK in $(PDK) (set by the gl_test action from the build; see info.yaml), as in each
+# PDK's Tiny Tapeout template (see UPSTREAM.md).
+PDK ?= sky130A
+ifeq ($(PDK),sky130A)
+COMPILE_ARGS    += -DUSE_POWER_PINS
 COMPILE_ARGS    += -DUNIT_DELAY=\#1
 VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/primitives.v
 VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/sky130_fd_sc_hd.v
+else ifeq ($(PDK),gf180mcuD)
+COMPILE_ARGS    += -DUSE_POWER_PINS
+COMPILE_ARGS    += -DUNIT_DELAY=\#1
+VERILOG_SOURCES += $(PDK_ROOT)/gf180mcuD/libs.ref/gf180mcu_fd_sc_mcu7t5v0/verilog/primitives.v
+VERILOG_SOURCES += $(PDK_ROOT)/gf180mcuD/libs.ref/gf180mcu_fd_sc_mcu7t5v0/verilog/gf180mcu_fd_sc_mcu7t5v0.v
+else
+# IHP (ihp-sg13cmos5l or ihp-sg13g2), e.g. sg13cmos5l_stdcell.v
+PDK_CELL_PREFIX = $(patsubst ihp-%,%,$(PDK))
+PDK_LIBS_REF = $(PDK_ROOT)/$(PDK)/libs.ref
+VERILOG_SOURCES += $(PDK_LIBS_REF)/$(PDK_CELL_PREFIX)_io/verilog/$(PDK_CELL_PREFIX)_io.v
+# Newer PDK versions ship the UDP (user-defined primitive) models in a separate file
+VERILOG_SOURCES += $(wildcard $(PDK_LIBS_REF)/$(PDK_CELL_PREFIX)_stdcell/verilog/$(PDK_CELL_PREFIX)_udp.v)
+VERILOG_SOURCES += $(PDK_LIBS_REF)/$(PDK_CELL_PREFIX)_stdcell/verilog/$(PDK_CELL_PREFIX)_stdcell.v
+endif
 
 # this gets copied in by the GDS action workflow
 VERILOG_SOURCES += $(PWD)/gate_level_netlist.v

@@ -22,7 +22,7 @@ module tb ();
   wire [7:0] uo_out;
   wire [7:0] uio_out;
   wire [7:0] uio_oe;
-`ifdef GL_TEST
+`ifdef USE_POWER_PINS
   wire VPWR = 1'b1;
   wire VGND = 1'b0;
 `endif
@@ -30,8 +30,8 @@ module tb ();
   // Replace tt_um_example with your module name:
   tt_um_example user_project (
 
-      // Include power ports for the Gate Level test:
-`ifdef GL_TEST
+      // Include power ports for the Gate Level test (for PDKs whose netlists have them; see test/Makefile):
+`ifdef USE_POWER_PINS
       .VPWR(VPWR),
       .VGND(VGND),
 `endif
